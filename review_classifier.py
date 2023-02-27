@@ -1,7 +1,7 @@
 import openai
 
 def reviewQuality(product_name, review_texts):
-  openai.api_key = "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"
+  openai.api_key = "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"
   
   prompt = "Classify whether these are Real or Fake reviews for an Amazon product called " + product_name + ":\n\n" 
 
@@ -23,5 +23,3 @@ def reviewQuality(product_name, review_texts):
   )
 
   print(response)
-
-reviewQuality("football", ["My son loves it", "It taste good", "whefhwefhwue", "Text me", "My uncle loves it", "Don't buy this, it broke in one day"])
