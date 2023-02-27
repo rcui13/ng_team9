@@ -34,7 +34,7 @@ if "__main__" == __name__:
     product_code = extract_product_code(product_url)
     
     soup = BeautifulSoup(get_website_html(product_url), features="html.parser")
-    title = soup.find("span", attrs={"id":"productTitle"}).text.strip()
+    #title = soup.find("span", attrs={"id":"productTitle"}).text.strip()
 
     reviewer_names = []
     review_rating = []
@@ -50,11 +50,12 @@ if "__main__" == __name__:
             review_rating.append(s.find("i", attrs={"data-hook":"review-star-rating"}).find("span"))
             reviewer_url.append(s.find("a")['href'])
 
-    processed_rating = [float(re.search(r'[0-9].[0-9]', str(e)).group()) for e in review_rating]
-    processed_review = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
+    processed_rating = [float(re.findall(r'[0-9].[0-9]', str(e))[0]) for e in review_rating]
+    processed_review = [e.text.replace("<br/>", "\n") for e in review_text]
     processed_url = ["https://www.amazon.com/" + e for e in reviewer_url] 
 
-    print(title)
+    #print(title)
+    print(processed_review)
     print(len(processed_review))
     print(len(reviewer_names))
     print(len(processed_rating))
