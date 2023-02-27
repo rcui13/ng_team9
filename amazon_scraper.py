@@ -24,5 +24,6 @@ if "__main__" == __name__:
     reviewer_names = [s for s in soup.find_all(class_="a-profile-name")]
     review_text = [s.find("span") for s in soup.find_all("span", attrs={"data-hook":"review-body"})]
 
-    print(reviewer_names)
-    print(review_text)
+    processed_reviews = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
+    print(processed_reviews)
+        
