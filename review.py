@@ -1,7 +1,5 @@
 import re
 
-PRODUCT_NAME = 
-
 class Review:
 
     def __init__(self, name, review_title, text, rating, url, is_real) -> None:
