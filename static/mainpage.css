@@ -1,21 +1,23 @@
 .header {
     background-color: #1b1c2a;
-    /*height: 100px;*/
 }
 
 .header-content {
     color: aliceblue;
     align-content: center;
     text-align: center;
-
 }
 
-.body {
-    align-items: center;
-
+#search-button {
+    border-width:1px;
+    cursor:pointer;
 }
 
 .scraper {
     padding-top:50px;
     transform: scale(1.5);
+}
+
+body {
+    overflow-x: hidden;
 }
