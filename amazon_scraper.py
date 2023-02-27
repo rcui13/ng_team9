@@ -53,4 +53,4 @@ if "__main__" == __name__:
     
     processed_rating = [float(re.search(r'[0-9].[0-9]', str(e)).group()) for e in review_rating]
     processed_review = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
-    processed_url = ["https://www.amazon.com/" + e for e in review_url] 
+    processed_url = ["https://www.amazon.com/" + e for e in reviewer_url] 
