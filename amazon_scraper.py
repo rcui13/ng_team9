@@ -61,4 +61,4 @@ if "__main__" == __name__:
     print(len(reviewer_names))
     print(len(processed_rating))
     print(len(processed_url))
-
+    
