@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-
+import re
 
 def get_website_html(url: str) -> str:
     return requests.get(url, headers=({'User-Agent':'Mozilla/5.0 (X11; Linux x86_64)AppleWebKit/537.36 (KHTML, like Gecko)Chrome/44.0.2403.157 Safari/537.36','Accept-Language': 'en-US, en;q=0.5'})).text
@@ -24,7 +24,7 @@ if "__main__" == __name__:
     reviewer_names = [s for s in soup.find_all(class_="a-profile-name")]
     review_text = [s.find("span") for s in soup.find_all("span", attrs={"data-hook":"review-body"})]
     review_rating = [s.find("span") for s in soup.find_all("i", attrs={"data-hook":"review-star-rating"})]
-
+    processed_rating = [float(re.search(r'[0-9].[0-9]', str(e)).group()) for e in review_rating]
     processed_reviews = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
-    print(processed_reviews)
+    print(processed_rating)
         
