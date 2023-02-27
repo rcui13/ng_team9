@@ -15,8 +15,7 @@ def get_product_review_url(product_code: str) -> str:
 
 def pages(url: str) -> BeautifulSoup:
     i = 1
-    while (soup := BeautifulSoup(get_website_html(get_product_review_url(url) + str(i))))\
-        .find(class_="a-section review aok-relative"):
+    while (soup := BeautifulSoup(get_website_html(get_product_review_url(url) + str(i)))).find(class_="a-section review aok-relative"):
         yield soup
         i += 1
 
@@ -29,7 +28,11 @@ if "__main__" == __name__:
     reviewer_names = [s for s in soup.find_all(class_="a-profile-name")]
     review_text = [s.find("span") for s in soup.find_all("span", attrs={"data-hook":"review-body"})]
     review_rating = [s.find("span") for s in soup.find_all("i", attrs={"data-hook":"review-star-rating"})]
-    processed_rating = [float(re.search(r'[0-9].[0-9]', str(e)).group()) for e in review_rating]
-    processed_reviews = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
+    review_url = [s.find("a")['href'] for s in soup.find_all("div", attrs={"data-hook":"genome-widget"})]
 
-    print(processed_rating)
+    # 3 processed lists - rating, review, url link
+    
+    processed_rating = [float(re.search(r'[0-9].[0-9]', str(e)).group()) for e in review_rating]
+    processed_review = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
+    processed_url = ["https://www.amazon.com/" + e for e in review_url] 
+
