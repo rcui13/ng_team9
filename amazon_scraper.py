@@ -19,9 +19,11 @@ if "__main__" == __name__:
     product_code = extract_product_code(product_url)
     review_url = get_product_review_url(product_code)
 
-    # Currently requests are failing to get the correect url
-
     soup = BeautifulSoup(get_website_html(review_url), features="html.parser")
     reviews = soup.find_all(class_="a-section review aok-relative")
+    reviewer_names = soup.find_all(class_="a-profile-name")
+    review_text = soup.find_all(class_="a-size-base review-text review-text-content")
 
-    print(reviews)
+    print(reviewer_names)
+
+    print(review_text)
