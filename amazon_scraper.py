@@ -3,7 +3,7 @@ import requests
 
 
 def get_website_html(url: str) -> str:
-    return requests.get(url).text
+    return requests.get(url, headers=({'User-Agent':'Mozilla/5.0 (X11; Linux x86_64)AppleWebKit/537.36 (KHTML, like Gecko)Chrome/44.0.2403.157 Safari/537.36','Accept-Language': 'en-US, en;q=0.5'})).text
 
 # Extracts the product code in order to navigate into review page
 def extract_product_code(url: str) -> str:
@@ -25,6 +25,3 @@ if "__main__" == __name__:
     reviews = soup.find_all(class_="a-section review aok-relative")
 
     print(reviews)
-
-    soup = BeautifulSoup(get_website_html("https://www.amazon.com/ref=nav_logo"), features="html.parser")
-    print(soup.prettify())
