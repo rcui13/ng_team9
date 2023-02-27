@@ -10,10 +10,9 @@ def main(url):
 
         for s in review_html: 
             reviews.append(Review(s.find(class_="a-profile-name"),
-                            s.find("span", attrs={"data-hook":"review-body"}),
-                            s.find("i", attrs={"data-hook":"review-star-rating"}).find("span"),
-                            s.find("a")['href']))
-    
+                           s.find("span", attrs={"data-hook":"review-body"}),
+                           s.find("i", attrs={"data-hook":"review-star-rating"}).find("span"),
+                           s.find("a")['href']))
 
 if "__main__" == __name__:
     product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Pe\
