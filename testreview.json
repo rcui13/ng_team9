@@ -1,0 +1,10 @@
+{
+  "0": {
+    "reviewer_name": "John Smith",
+    "review_title": "Product A",
+    "rating": "4.5",
+    "text": "Good product\n Would buy again",
+    "reviewer_url": "https://www.amazon.com/gp/profile/amzn1.account.AFC5UNS4CPPDXYGYJARHXBHKVFHQ/ref=cm_cr_dp_d_gw_tr?ie=UTF8",
+    "is_real": true
+  }
+}

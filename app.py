@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import time
 
 app = Flask(__name__)
 
@@ -12,4 +13,6 @@ def get_reviews():
 
 @app.route('/load_reviews')
 def load_reviews():
-    return render_template('reviews.html')
+    time.sleep(3)
+    valid_link = 'invalidpage.html'
+    return render_template(valid_link)

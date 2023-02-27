@@ -19,7 +19,7 @@
 }
 
 .content-center {
-    padding-top: 50px;
+    padding-top: 40px;
 }
 
 #search-button {
@@ -52,7 +52,18 @@ body {
 }
 
 img {
-    border-radius: 50%;
-    width:100px;
     height:100px;
+    float: left;
+    margin: 5px;
+}
+
+.description-flex {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width:100%;
+}
+
+.description-content {
+    width:275px;
 }

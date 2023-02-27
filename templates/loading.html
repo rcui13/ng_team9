@@ -1,10 +1,13 @@
-{% extends 'mainpage.html' %}
+{% extends 'description.html' %}
 
-{% block content %}
-    <p>Fetching reviews...</p>
+{% block load %}
+    <p style="margin:25px; font-size:30px">Fetching reviews...</p>
     <div class="loader"></div>
+{% endblock %}
+
+{% block script %}
     <script>
         document.getElementById("url").value = sessionStorage.getItem("url");
-
+        window.location.replace('/load_reviews');
     </script>
 {% endblock %}
