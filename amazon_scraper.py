@@ -24,5 +24,5 @@ if "__main__" == __name__:
     reviewer_names = [s.string for s in soup.find_all(class_="a-profile-name")]
     review_text = soup.find_all(class_="a-size-base review-text review-text-content")
 
-    print(reviewer_names)
-    print(review_text)
+    title = soup.find("span", attrs={"data-hook":"review-body"})
+    print(title)
