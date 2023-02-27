@@ -54,6 +54,7 @@ if "__main__" == __name__:
     processed_review = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
     processed_url = ["https://www.amazon.com/" + e for e in reviewer_url] 
 
+    print(title)
     print(len(processed_review))
     print(len(reviewer_names))
     print(len(processed_rating))
