@@ -36,7 +36,9 @@ def output_json(reviews):
                             "text": review.text,
                             "reviewer_url": review.reviewer_url,
                             "is_real": review.is_real}
-
+    return json.dumps(review_output)
+    # with open("test.json", "w") as f:
+    #     f.write(json.dumps(review_output))
 
 if "__main__" == __name__:
     product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Pe\
