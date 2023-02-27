@@ -1,20 +1,27 @@
 from review import Review
 from review_scraper import ReviewScraper
-from review_classifier import reviewQuality
+# from review_classifier import reviewQuality
+import json
+
 
 def main(url):
     scraper = ReviewScraper()
     reviews = []
+    
+    print(scraper.get_product_name(url))
 
     for page in scraper.pages(scraper.get_product_reviews_url(url)):
         review_html = page.find_all(class_="a-section celwidget")
 
-        for s in review_html: 
+
+        for s in review_html:
             reviews.append(
-                Review(s.find(class_="a-profile-name"), 
-                       s.find("a", attrs={"data-hook":"review-title"}).find("span"),
-                       s.find("span", attrs={"data-hook":"review-body"}),
-                       s.find("i", attrs={"data-hook":"review-star-rating"}).find("span"),
+                Review(s.find(class_="a-profile-name"),
+                       s.find("a", attrs={
+                              "data-hook": "review-title"}).find("span"),
+                       s.find("span", attrs={"data-hook": "review-body"}),
+                       s.find("i", attrs={
+                              "data-hook": "review-star-rating"}).find("span"),
                        s.find("a")['href'],
                        True))
         
