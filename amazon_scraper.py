@@ -33,6 +33,9 @@ if "__main__" == __name__:
         rformance/dp/B09FH4K5J1/ref=cm_cr_arp_d_product_top?ie=UTF8"
     product_code = extract_product_code(product_url)
     
+    soup = BeautifulSoup(get_website_html(product_url), features="html.parser")
+    title = soup.find("span", attrs={"id":"productTitle"}).text.strip()
+
     reviewer_names = []
     review_rating = []
     review_text = []
@@ -49,7 +52,6 @@ if "__main__" == __name__:
             review_rating.append(s.find("span"))
 
         for s in page.find_all(class_="a-section celwidget"):
-            # "div", attrs={"data-hook":"genome-widget"}):
             reviewer_url.append(s.find("a")['href'])
     
     processed_rating = [float(re.search(r'[0-9].[0-9]', str(e)).group()) for e in review_rating]
