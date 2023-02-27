@@ -36,6 +36,7 @@ if "__main__" == __name__:
     reviewer_names = []
     review_rating = []
     review_text = []
+    reviewer_url = []
 
     for page in pages(get_product_reviews_url(product_code)):
         for s in page.find_all(class_="a-profile-name"):
@@ -46,11 +47,10 @@ if "__main__" == __name__:
         
         for s in page.find_all("i", attrs={"data-hook":"review-star-rating"}):
             review_rating.append(s.find("span"))
-    
-    review_url = [s.find("a")['href'] for s in soup.find_all("div", attrs={"data-hook":"genome-widget"})]
 
-    # 3 processed lists - rating, review, url link
+        for s in page.find_all("div", attrs={"data-hook":"genome-widget"}):
+            reviewer_url.append(s.find("a")['href'])
     
     processed_rating = [float(re.search(r'[0-9].[0-9]', str(e)).group()) for e in review_rating]
     processed_review = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
-    processed_url = ["https://www.amazon.com/" + e for e in review_url] 
+    processed_url = ["https://www.amazon.com/" + e for e in reviewer_url] 
