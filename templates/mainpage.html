@@ -13,24 +13,35 @@
 <body>
 
 <header class="container-fluid p-5 text-white text-center header">
-    <h1>Amazon Review Evaluator</h1>
+    <h1 id="header" onclick="window.location.replace('/')">Amazon Review Evaluator</h1>
 </header>
-<form id="search" onsubmit="submitForm()">
-    <div class="body">
-        <div class="scraper text-center">
-            <input type="url" name="url" value="" placeholder="Enter an Amazon product URL" size="50px" >
+<div class="body content-center text-center">
+    <h2>Decipher Between Real and Fake Amazon Comments</h2>
+    <form id="search" onsubmit="submitForm()">
+        <div class="scraper">
+            <input type="url" id="url" name="url" value="" placeholder="Enter an Amazon product URL" size="50px" >
             <button id="search-button">
                 <i class="fa fa-search" ></i>
             </button>
         </div>
-    </div>
-</form>
+    </form>
+</div>
+<div class="content-center text-center">
+    {% block content %}{% endblock %}
+</div>
 
 </body>
 <script>
     function submitForm() {
-        const url = $("#search").serializeArray();
+        const url = ($("#search").serializeArray())[0].value;
         console.log(url);
+
+        if (url === '') {
+            alert("Please enter a valid URL");
+        } else {
+            sessionStorage.setItem("url", url);
+            window.location.replace('/get_reviews');
+        }
         event.preventDefault();
     }
 </script>

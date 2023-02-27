@@ -1,0 +1,10 @@
+{% extends 'mainpage.html' %}
+
+{% block content %}
+    <p>Fetching reviews...</p>
+    <div class="loader"></div>
+    <script>
+        document.getElementById("url").value = sessionStorage.getItem("url");
+
+    </script>
+{% endblock %}
