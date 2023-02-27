@@ -36,16 +36,12 @@ def reviewQuality(product_name, reviews: list[Review]):
     text = response["choices"][0]["text"]
     reviewTypeArray = re.findall("Fake|Real", text)
 
-    isReal = []
-
-    # Converts reviewTypeArray to boolean values
-    for reviewType in reviewTypeArray:
-        if reviewType == 'Real':
-            isReal.append(True)
-        else:
-            isReal.append(False)
-
     # update all reviews is_real status
-    for i in range(len(reviews)):
-        reviews[i].is_real = isReal[i]
+    for i in range(len(reviewTypeArray)):
+        if reviewTypeArray[i] == 'Real':
+            reviews[i].is_real = True
+        else:
+            reviews[i].is_real = False
+
+
 
