@@ -1,0 +1,21 @@
+.header {
+    background-color: #1b1c2a;
+    /*height: 100px;*/
+}
+
+.header-content {
+    color: aliceblue;
+    align-content: center;
+    text-align: center;
+
+}
+
+.body {
+    align-items: center;
+
+}
+
+.scraper {
+    padding-top:50px;
+    transform: scale(1.5);
+}
