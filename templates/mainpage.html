@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon Review Evaluator</title>
+    <link rel="stylesheet" href="../static/mainpage.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+</head>
+<body>
+
+<header class="container-fluid p-5 text-white text-center header">
+    <h1 id="header" onclick="window.location.replace('/')">Amazon Review Evaluator</h1>
+</header>
+<div class="body content-center text-center">
+    <h2>Decipher Between Real and Fake Amazon Comments</h2>
+    <form id="search" onsubmit="submitForm()">
+        <div class="scraper">
+            <input type="url" id="url" name="url" value="" placeholder="Enter an Amazon product URL" size="50px" >
+            <button id="search-button">
+                <i class="fa fa-search" ></i>
+            </button>
+        </div>
+    </form>
+</div>
+<div class="content-center text-center">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+<script>
+    function submitForm() {
+        const url = ($("#search").serializeArray())[0].value;
+        console.log(url);
+
+        if (url === '') {
+            alert("Please enter a valid URL");
+        } else {
+            sessionStorage.setItem("url", url);
+            window.location.replace('/get_reviews');
+        }
+        event.preventDefault();
+    }
+</script>
+</html>
