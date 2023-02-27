@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoupD
+from bs4 import BeautifulSoup
 import requests
 
 class ReviewScraper:

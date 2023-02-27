@@ -1,6 +1,6 @@
 from review import Review
 from review_scraper import ReviewScraper
-# from review_classifier import reviewQuality
+from review_classifier import reviewQuality
 import json
 
 
@@ -25,7 +25,7 @@ def main(url):
                        s.find("a")['href'],
                        True))
         
-    arr = reviewQuality(scraper.get_title(), reviews)
+    arr = reviewQuality(scraper.get_product_name(url), reviews)
     print(arr)
 
 if "__main__" == __name__:
