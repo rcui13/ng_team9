@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import time
+import json
 
 app = Flask(__name__)
 
@@ -14,5 +15,9 @@ def get_reviews():
 @app.route('/load_reviews')
 def load_reviews():
     time.sleep(3)
-    valid_link = 'invalidpage.html'
+    valid_link = 'reviews.html'
+    # f = open("testreview.json")
+    # review = json.load(f)
+    # print(len(review))
+    # print(review['0'])
     return render_template(valid_link)
