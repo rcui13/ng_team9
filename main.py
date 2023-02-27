@@ -18,7 +18,7 @@ def main(url):
                        s.find("a")['href'],
                        True))
         
-        reviewQuality(reviews)
+    reviewQuality(reviews)
 
 
 if "__main__" == __name__:
