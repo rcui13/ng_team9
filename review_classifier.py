@@ -17,6 +17,10 @@ def reviewQuality(product_name, reviews: list[Review]):
     for review in reviews:
         review_text = review.text
 
+        # For debugging purposes to see the max input possible
+        if review_number == 14:
+            break
+
         prompt += str(review_number) + ". " + "\"" + review_text + "\"" + "\n"
         review_number += 1
 
