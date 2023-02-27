@@ -41,7 +41,6 @@ if "__main__" == __name__:
     review_text = []
     reviewer_url = []
 
-    
     for page in pages(get_product_reviews_url(product_code)):
         review_html = page.find_all(class_="a-section celwidget")
 
@@ -58,4 +57,3 @@ if "__main__" == __name__:
     print(len(reviewer_names))
     print(len(processed_rating))
     print(len(processed_url))
-
