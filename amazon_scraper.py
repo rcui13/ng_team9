@@ -23,6 +23,7 @@ if "__main__" == __name__:
     reviews = soup.find_all(class_="a-section review aok-relative")
     reviewer_names = [s for s in soup.find_all(class_="a-profile-name")]
     review_text = [s.find("span") for s in soup.find_all("span", attrs={"data-hook":"review-body"})]
+    review_rating = [s.find("span") for s in soup.find_all("i", attrs={"data-hook":"review-star-rating"})]
 
     processed_reviews = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
     print(processed_reviews)
