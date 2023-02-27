@@ -41,19 +41,16 @@ if "__main__" == __name__:
     review_text = []
     reviewer_url = []
 
-    for page in pages(get_product_reviews_url(product_code)):
-        for s in page.find_all(class_="a-section celwidget"):
-            reviewer_names.append(s.find(class_="a-profile-name"))
-
-        for s in page.find_all("span", attrs={"data-hook":"review-body"}):
-            review_text.append(s.find("span"))
-        
-        for s in page.find_all("i", attrs={"data-hook":"review-star-rating"}):
-            review_rating.append(s.find("span"))
-
-        for s in page.find_all(class_="a-section celwidget"):
-            reviewer_url.append(s.find("a")['href'])
     
+    for page in pages(get_product_reviews_url(product_code)):
+        review_html = page.find_all(class_="a-section celwidget")
+
+        for s in review_html: 
+            reviewer_names.append(s.find(class_="a-profile-name"))
+            review_text.append(s.find("span", attrs={"data-hook":"review-body"}).find("span"))
+            review_rating.append(s.find("i", attrs={"data-hook":"review-star-rating"}).find("span"))
+            reviewer_url.append(s.find("a")['href'])
+
     processed_rating = [float(re.search(r'[0-9].[0-9]', str(e)).group()) for e in review_rating]
     processed_review = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
     processed_url = ["https://www.amazon.com/" + e for e in reviewer_url] 
