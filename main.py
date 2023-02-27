@@ -1,5 +1,6 @@
 from review import Review
 from review_scraper import ReviewScraper
+from review_classifier import reviewQuality
 
 def main(url):
     scraper = ReviewScraper()
@@ -14,7 +15,10 @@ def main(url):
                        s.find("a", attrs={"data-hook":"review-title"}).find("span"),
                        s.find("span", attrs={"data-hook":"review-body"}),
                        s.find("i", attrs={"data-hook":"review-star-rating"}).find("span"),
-                       s.find("a")['href']))
+                       s.find("a")['href'],
+                       True))
+        
+        reviewQuality(reviews)
 
 
 if "__main__" == __name__:
