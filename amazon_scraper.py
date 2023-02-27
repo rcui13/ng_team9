@@ -21,8 +21,8 @@ if "__main__" == __name__:
 
     soup = BeautifulSoup(get_website_html(review_url), features="html.parser")
     reviews = soup.find_all(class_="a-section review aok-relative")
-    reviewer_names = [s.string for s in soup.find_all(class_="a-profile-name")]
-    review_text = soup.find_all(class_="a-size-base review-text review-text-content")
+    reviewer_names = [s for s in soup.find_all(class_="a-profile-name")]
+    review_text = [s.find("span") for s in soup.find_all("span", attrs={"data-hook":"review-body"})]
 
-    title = soup.find("span", attrs={"data-hook":"review-body"})
-    print(title)
+    print(reviewer_names)
+    print(review_text)
