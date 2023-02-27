@@ -9,12 +9,13 @@ def main(url):
         review_html = page.find_all(class_="a-section celwidget")
 
         for s in review_html: 
-            reviews.append(Review(s.find(class_="a-profile-name"),
-                           s.find("a", attrs={"data-hook":"review-title"}).find("span"),
-                           s.find("span", attrs={"data-hook":"review-body"}),
-                           s.find("i", attrs={"data-hook":"review-star-rating"}).find("span"),
-                           s.find("a")['href']))
-    print(reviews[0].title)
+            reviews.append(
+                Review(s.find(class_="a-profile-name"), 
+                       s.find("a", attrs={"data-hook":"review-title"}).find("span"),
+                       s.find("span", attrs={"data-hook":"review-body"}),
+                       s.find("i", attrs={"data-hook":"review-star-rating"}).find("span"),
+                       s.find("a")['href']))
+
 
 if "__main__" == __name__:
     product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Pe\
