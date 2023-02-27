@@ -18,8 +18,8 @@ def main(url):
                        s.find("a")['href'],
                        True))
         
-    reviewQuality(reviews)
-
+    arr = reviewQuality(scraper.get_title(), reviews)
+    print(arr)
 
 if "__main__" == __name__:
     product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Pe\
