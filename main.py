@@ -7,7 +7,7 @@ def main(url):
     scraper = ReviewScraper()
     reviews = []
     
-    print(scraper.get_product_name(url))
+    product_name = scraper.get_product_name(url)
 
     for page in scraper.pages(scraper.get_product_reviews_url(url)):
         review_html = page.find_all(class_="a-section celwidget")
@@ -23,10 +23,9 @@ def main(url):
                               "data-hook": "review-star-rating"}).find("span"),
                        s.find("a")['href'],
                        True))
-        # reviewQuality(reviews)
-        output_json(reviews)
+    output_json(product_name, reviews)
 
-def output_json(reviews) -> dict:
+def output_json(product_name, reviews) -> dict:
     review_output = {}
     for i, review in enumerate(reviews):
         review_output[i] = {"reviewer_name": review.reviewer_name,
@@ -35,9 +34,8 @@ def output_json(reviews) -> dict:
                             "text": review.text,
                             "reviewer_url": review.reviewer_url,
                             "is_real": review.is_real}
-    return review_output
-    # with open("test.json", "w") as f:
-    #     f.write(json.dumps(review_output))
+    return {product_name: review_output}
+
 
 if "__main__" == __name__:
     product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Pe\
