@@ -32,7 +32,7 @@ if "__main__" == __name__:
     product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Pe\
         rformance/dp/B09FH4K5J1/ref=cm_cr_arp_d_product_top?ie=UTF8"
     product_code = extract_product_code(product_url)
-
+    
     reviewer_names = []
     review_rating = []
     review_text = []
@@ -47,5 +47,10 @@ if "__main__" == __name__:
         for s in page.find_all("i", attrs={"data-hook":"review-star-rating"}):
             review_rating.append(s.find("span"))
     
+    review_url = [s.find("a")['href'] for s in soup.find_all("div", attrs={"data-hook":"genome-widget"})]
+
+    # 3 processed lists - rating, review, url link
+    
     processed_rating = [float(re.search(r'[0-9].[0-9]', str(e)).group()) for e in review_rating]
-    processed_reviews = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
+    processed_review = [str(e).strip("</span>").strip("<span>").replace("<br/>", "\n") for e in review_text]
+    processed_url = ["https://www.amazon.com/" + e for e in review_url] 
