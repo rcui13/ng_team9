@@ -28,4 +28,4 @@ class ReviewScraper:
 
     def get_product_name(self, url):
         soup = BeautifulSoup(self.get_website_html(url), features="html.parser")
-        return soup.find("span", attrs={"id":"productTitle"}).text.strip()
+        return soup.find("h1", attrs={"id":"title"}).find("span").text.strip()

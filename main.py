@@ -1,7 +1,6 @@
 from review import Review
 from review_scraper import ReviewScraper
 # from review_classifier import reviewQuality
-import json
 
 
 def main(url):
@@ -27,7 +26,7 @@ def main(url):
         # reviewQuality(reviews)
         output_json(reviews)
 
-def output_json(reviews):
+def output_json(reviews) -> dict:
     review_output = {}
     for i, review in enumerate(reviews):
         review_output[i] = {"reviewer_name": review.reviewer_name,
@@ -36,7 +35,7 @@ def output_json(reviews):
                             "text": review.text,
                             "reviewer_url": review.reviewer_url,
                             "is_real": review.is_real}
-    return json.dumps(review_output)
+    return review_output
     # with open("test.json", "w") as f:
     #     f.write(json.dumps(review_output))
 
