@@ -5,7 +5,14 @@ import time
 
 class ReviewScraper:
 
-
+    def __init__(self, url):
+        self.reviews_url = self.get_product_reviews_url(url)
+        self.big_soup = BeautifulSoup(self.get_website_html(self.reviews_url), features="html.parser")
+        while re.search(r'An error occurred while processing your request.', self.big_soup.text) != None:
+            print("Retrying...")
+            self.big_soup = BeautifulSoup(self.get_website_html(self.reviews_url), features="html.parser")
+            time.sleep(3)
+            
     def get_website_html(self, url: str) -> str:
         return requests.get(url, 
                             headers=({'User-Agent':'Mozilla/5.0 (X11; Linux x86_64)\
@@ -31,11 +38,3 @@ class ReviewScraper:
 
     def get_product_name(self):
         return re.search(r'^What do you want to know about (.*)\?$', self.big_soup.find("textarea", attrs={"name":"askQuestionText"})['placeholder']).group(1)
-    def __init__(self, url):
-        self.reviews_url = self.get_product_reviews_url(url)
-        self.big_soup = BeautifulSoup(self.get_website_html(self.reviews_url), features="lxml")
-        while re.search(r'An error occurred while processing your request.', self.big_soup.text) != None:
-            print("Retrying...")
-            self.big_soup = BeautifulSoup(self.get_website_html(self.reviews_url), features="lxml")
-            time.sleep(3)
-            
