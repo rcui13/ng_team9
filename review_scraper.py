@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import re
 
 class ReviewScraper:
 
@@ -27,5 +28,5 @@ class ReviewScraper:
         return splitted_url[5] if splitted_url[4] == "dp" else print("URL format changed") 
 
     def get_product_name(self, url):
-        soup = BeautifulSoup(self.get_website_html(url), features="html.parser")
-        return soup.find("h1", attrs={"id":"title"}).find("span").text.strip()
+        soup = BeautifulSoup(self.get_website_html(url) + "1", features="html.parser")
+        return re.search(r'^What do you want to know about (.*)\?$', soup.find("textarea", attrs={"name":"askQuestionText"})['placeholder']).group(1)

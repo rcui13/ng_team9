@@ -7,11 +7,12 @@ def main(url):
     scraper = ReviewScraper()
     reviews = []
     
-    product_name = scraper.get_product_name(url)
+    reviews_url = scraper.get_product_reviews_url(url)
 
-    for page in scraper.pages(scraper.get_product_reviews_url(url)):
+    product_name = scraper.get_product_name(reviews_url)
+
+    for page in scraper.pages(reviews_url):
         review_html = page.find_all(class_="a-section celwidget")
-
 
         for s in review_html:
             reviews.append(
@@ -23,7 +24,10 @@ def main(url):
                               "data-hook": "review-star-rating"}).find("span"),
                        s.find("a")['href'],
                        True))
-    output_json(product_name, reviews)
+
+    print(product_name)
+
+    #output_json(product_name, reviews)
 
 def output_json(product_name, reviews) -> dict:
     review_output = {}
