@@ -8,21 +8,21 @@ app = Flask(__name__)
 
 @app.route('/')
 def mainpage():
+    print("asdjfkl")
     return render_template('description.html')
 
-@app.route('/get_reviews')
+@app.route('/get_reviews', methods=['GET'])
 def get_reviews():
+    print("get reviews")
     return render_template('loading.html')
 
 @app.route('/load_reviews', methods=['POST'])
 def load_reviews():
-    # if request.method == 'POST':
     url = request.form["url"]
-    print(type(url))
     print(url)
-    # link = json.loads(url)
-    # print(link)
-    review = main.main(url)
-    print(review)
 
-    return render_template('reviews_flask.html', dict=review)
+    review = main.main(url)
+
+    # return render_template('reviews_flask.html', dict=review)
+    # return render_template('description.html')
+    return redirect('/')

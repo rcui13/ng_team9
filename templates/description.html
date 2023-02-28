@@ -23,6 +23,7 @@
 
 {% block script %}
     <script>
+        console.log("descriptoin.html")
         function submitForm() {
             const url = ($("#search").serializeArray())[0].value;
             console.log(url);
@@ -31,8 +32,21 @@
                 alert("Please enter a valid URL");
             } else {
                 sessionStorage.setItem("url", url);
-                window.location.replace('/get_reviews');
+                // window.location.replace('/get_reviews');
+                let req = new XMLHttpRequest();
+                req.onreadystatechange = function()
+                {
+                    if(this.readyState == 4 && this.status == 200) {
+                        console.log("change gstate")
+                    } else {
+                    }
+                }
+
+                req.open('GET', '/get_reviews', true);
+                req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+                req.send();
             }
+
             event.preventDefault();
         }
     </script>

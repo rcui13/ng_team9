@@ -3,6 +3,7 @@ from review_scraper import ReviewScraper
 import matplotlib.pyplot as plt
 from review_classifier import processQuality
 import re
+import json
 
 def main(url):
     scraper = ReviewScraper(url)
@@ -28,6 +29,7 @@ def main(url):
         r.text = r.text.replace("The media could not be loaded.", "").strip()
     processQuality(product_name, reviews, 10)
     # create_graph(reviews)
+    return output_json(product_name, reviews)
 
  #   for r in reviews:
  #       print(r.text)
@@ -42,8 +44,8 @@ def output_json(product_name, reviews) -> dict:
                             "reviewer_url": review.reviewer_url,
                             "date": review.date,
                             "is_real": review.is_real}
-    return {product_name: review_output}
-
+    # return json.dumps([product_name, review_output])
+    return [product_name, review_output]
 def create_graph(reviews):
     unreliable = 0
     for review in reviews:
