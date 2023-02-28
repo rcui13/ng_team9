@@ -1,6 +1,6 @@
 from review import Review
 from review_scraper import ReviewScraper
-from review_classifier import reviewQuality
+from review_classifier import process10
 import json
 
 
@@ -8,8 +8,6 @@ def main(url):
     scraper = ReviewScraper()
     reviews = []
     
-    print(scraper.get_product_name(url))
-
     for page in scraper.pages(scraper.get_product_reviews_url(url)):
         review_html = page.find_all(class_="a-section celwidget")
 
@@ -24,9 +22,11 @@ def main(url):
                               "data-hook": "review-star-rating"}).find("span"),
                        s.find("a")['href'],
                        True))
-        
-    arr = reviewQuality(scraper.get_product_name(url), reviews)
-    print(arr)
+    
+
+    process10(scraper.get_product_name(url), reviews)
+    for review in reviews:
+        print(review.is_real)
 
 if "__main__" == __name__:
     product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Pe\
