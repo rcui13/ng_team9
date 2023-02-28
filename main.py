@@ -27,6 +27,10 @@ def main(url):
     process10(product_name, reviews)
     create_graph(reviews)
 
+    for r in reviews:
+        if not r.is_real:
+            print(r.text)
+
 def output_json(product_name, reviews) -> dict:
     review_output = {}
     for i, review in enumerate(reviews):
@@ -51,5 +55,5 @@ def create_graph(reviews):
     plt.show()
 
 if "__main__" == __name__:
-    product_url = "https://www.amazon.com/GLAMFIELDS-Clipper-Catcher-Fingernail-Stainless/dp/B07YKTRSFM" 
+    product_url = "https://www.amazon.com/WAHU-Phlat-Ball-Classic-Green/dp/B09NWCVCGB" 
     main(product_url)

@@ -7,7 +7,7 @@ def _reviewQuality(product_name, reviews: list[Review]):
 
     # This is the key from openai
     with open("key.txt", "r") as f:
-        openai.api_key = "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" 
+        openai.api_key = "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"
     
     # This is the prompt that will generate if a review is real or fake
     prompt = "Classify whether these are Real or Fake reviews for an Amazon product called " + \
@@ -50,5 +50,7 @@ def _reviewQuality(product_name, reviews: list[Review]):
 
 def process10(product_name, reviews: list[Review]):
     for i in range(0, len(reviews), 10):
+        print("AI Processing")
         sublist = reviews[i:i+10]
         _reviewQuality(product_name, sublist)
+    
