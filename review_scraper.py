@@ -26,6 +26,6 @@ class ReviewScraper:
         splitted_url = url.split("/")
         return splitted_url[5] if splitted_url[4] == "dp" else print("URL format changed") 
 
-    def get_product_name(self, url):
-        soup = BeautifulSoup(self.get_website_html(url), features="html.parser")
-        return soup.find("h1", attrs={"id":"title"}).find("span").text.strip()
+    # def get_product_name(self, url):
+    #     soup = BeautifulSoup(self.get_website_html(self.get_product_reviews_url(url)), features="html.parser")
+    #     return soup.find("h1", attrs={"id":"title"}).find("span").text.strip()
