@@ -1,12 +1,12 @@
 import openai
 import re
 from review import Review
+import threading
 
 # Takes an array of review_texts and returns an array of either Real or Fake
 def _reviewQuality(product_name, reviews: list[Review]):
 
     # This is the key from openai
-    # with open("key.txt", "r") as f:
     openai.api_key = "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"
     
     # This is the prompt that will generate if a review is real or fake
@@ -32,6 +32,7 @@ def _reviewQuality(product_name, reviews: list[Review]):
         presence_penalty=0.0
     )
 
+    print("AI processed")
     # Takes the returned response from openai and extracts information with regex to
     # tell if review is real or fake
     text = response["choices"][0]["text"]
@@ -45,8 +46,14 @@ def _reviewQuality(product_name, reviews: list[Review]):
             reviews[i].is_real = False
 
 def processQuality(product_name, reviews: list[Review], batch_size: int):
+    threads = []
     for i in range(0, len(reviews), batch_size):
-        print("AI Processing")
         sublist = reviews[i:i+batch_size]
-        _reviewQuality(product_name, sublist)
+        thread = threading.Thread(target=_reviewQuality, args=(product_name, sublist))
+        thread.start()
+        threads.append(thread)
+
+    # Wait for all threads to complete
+    for thread in threads:
+        thread.join()
     
