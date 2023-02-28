@@ -3,7 +3,6 @@ from review_scraper import ReviewScraper
 import matplotlib.pyplot as plt
 from review_classifier import process10
 
-
 def main(url):
     scraper = ReviewScraper()
     reviews = []
@@ -52,7 +51,6 @@ def create_graph(reviews):
     ax.pie([unreliable, len(reviews)-unreliable], 
            labels=["Unreliable", "Reliable"])
     plt.show()
-
 
 if "__main__" == __name__:
     product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Pe\

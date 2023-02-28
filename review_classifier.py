@@ -3,11 +3,12 @@ import re
 from review import Review
 
 # Takes an array of review_texts and returns an array of either Real or Fake
-def reviewQuality(product_name, reviews: list[Review]):
+def _reviewQuality(product_name, reviews: list[Review]):
+
     # This is the key from openai
     with open("key.txt", "r") as f:
         openai.api_key = f.read()
-
+    
     # This is the prompt that will generate if a review is real or fake
     prompt = "Classify whether these are Real or Fake reviews for an Amazon product called " + \
         product_name + ":\n\n"
@@ -40,9 +41,14 @@ def reviewQuality(product_name, reviews: list[Review]):
     text = response["choices"][0]["text"]
     reviewTypeArray = re.findall("Fake|Real", text)
 
-    # update all reviews is_real status
+    # Converts reviewTypeArray to boolean values and updates review
     for i in range(len(reviewTypeArray)):
         if reviewTypeArray[i] == 'Real':
             reviews[i].is_real = True
         else:
             reviews[i].is_real = False
+
+def process10(product_name, reviews: list[Review]):
+    for i in range(0, len(reviews), 10):
+        sublist = reviews[i:i+10]
+        _reviewQuality(product_name, sublist)
