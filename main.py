@@ -27,6 +27,7 @@ def main(url):
     
     for r in reviews:
         r.text = r.text.replace("The media could not be loaded.", "").strip()
+        r.text = r.text.replace('"', "'")
     processQuality(product_name, reviews, 10)
     # create_graph(reviews)
     return output_json(product_name, reviews)
@@ -44,8 +45,8 @@ def output_json(product_name, reviews) -> dict:
                             "reviewer_url": review.reviewer_url,
                             "date": review.date,
                             "is_real": review.is_real}
-    # return json.dumps([product_name, review_output])
-    return [product_name, review_output]
+    return json.dumps([product_name, review_output])
+    # return [product_name, review_output]
 def create_graph(reviews):
     unreliable = 0
     for review in reviews:

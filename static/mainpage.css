@@ -135,6 +135,7 @@ a {
     height: 300px;
     width: 300px;
     border-radius: 50%;
+    position:absolute;
 }
 
 .item-count-display {
@@ -167,4 +168,12 @@ a {
 
 .page-button > .available {
 
+}
+
+.all-review {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 20px;
+    width:80%;
 }

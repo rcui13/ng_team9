@@ -13,8 +13,7 @@
         $.ajax({
             url: '/load_reviews',
             method: 'post',
-            // data: url,
-            // dataType: "text",
+            data: "data=" + url,
             success: function() {
                 console.log("success loading.");
                 window.location.replace("/load_reviews");
