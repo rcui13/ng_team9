@@ -11,7 +11,7 @@ class ReviewScraper:
         while re.search(r'An error occurred while processing your request.', self.big_soup.text) != None:
             print("Retrying...")
             self.big_soup = BeautifulSoup(self.get_website_html(self.reviews_url), features="html.parser")
-            time.sleep(3)
+            time.sleep(10)
             
     def get_website_html(self, url: str) -> str:
         return requests.get(url, 
