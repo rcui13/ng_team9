@@ -16,7 +16,7 @@
     <h1 id="header" onclick="window.location.replace('/')">Amazon Review Evaluator</h1>
 </header>
 <div class="body content-center text-center">
-    <h2>Decipher Between Real and Fake Amazon Reviews</h2>
+    <h2>Decipher Between Reliable and Unreliable Amazon Reviews</h2>
     <form id="search" onsubmit="submitForm()">
         <div class="scraper">
             <input type="url" id="url" name="url" value="" placeholder="Enter an Amazon product URL" size="50px" >
@@ -30,7 +30,7 @@
     {% block load %}{% endblock %}
 </div>
 
-<div class="content-center text-center" style="padding:30px">
+<div class="content-center text-center" style="display:flex">
     {% block content %}{% endblock %}
 </div>
 

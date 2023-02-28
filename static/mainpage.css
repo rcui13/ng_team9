@@ -19,7 +19,9 @@
 }
 
 .content-center {
-    padding-top: 40px;
+    /*padding-top: 40px;*/
+    padding:30px;
+    /*display: flex;*/
 }
 
 #search-button {
@@ -66,4 +68,103 @@ img {
 
 .description-content {
     width:275px;
+}
+
+.review {
+    float:right;
+    width:70%;
+    text-align:left;
+    display: flex;
+    flex-direction: row;
+    /*overflow-y: auto;*/
+}
+
+.reviewer {
+    cursor: pointer;
+}
+
+.review-left {
+    width:70%;
+}
+
+.review-right {
+    margin: 5px;
+    width:15%;
+    left:15%;
+    position:relative;
+}
+
+.review-right > i {
+    top:35px;
+    position:relative;
+    left:50px;
+}
+
+.fa-check-circle {
+    color:green;
+    scale:3;
+}
+
+.fa-times-circle {
+    color:red;
+    scale:3;
+}
+
+.fa-star {
+    color:orange;
+}
+
+.review-rating > span {
+    font-weight: bold;
+}
+
+.fa-star-o {
+    color:orange;
+}
+
+.review-date{
+    color: #7c7b7b
+}
+
+a {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+#pie-chart {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+}
+
+.item-count-display {
+    display: flex;
+    justify-content: center;
+}
+
+.page-button {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.page-button:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.previous {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.next {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.page-button > .available {
+
 }

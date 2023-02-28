@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import time
 import json
+import plot
 
 app = Flask(__name__)
 
@@ -15,9 +16,10 @@ def get_reviews():
 @app.route('/load_reviews')
 def load_reviews():
     time.sleep(3)
-    valid_link = 'reviews.html'
-    # f = open("testreview.json")
-    # review = json.load(f)
-    # print(len(review))
-    # print(review['0'])
-    return render_template(valid_link)
+    f = open('testreview.json')
+    review = json.load(f)
+    print(review)
+    print(review['0']['reviewer_name'])
+    print(len(review))
+    # plot.make_pie_chart(review)
+    return render_template('reviews_flask.html', dict=review)
