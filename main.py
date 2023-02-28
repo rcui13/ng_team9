@@ -27,7 +27,7 @@ def main(url):
     for r in reviews:
         r.text = r.text.replace("The media could not be loaded.", "").strip()
     processQuality(product_name, reviews, 10)
-    create_graph(reviews)
+    # create_graph(reviews)
 
  #   for r in reviews:
  #       print(r.text)
@@ -56,5 +56,5 @@ def create_graph(reviews):
     plt.show()
 
 if "__main__" == __name__:
-    product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Performance/dp/B09FH4K5J1/ref=sr_1_1_sspa?crid=O0KB7A6DOVP8&keywords=soccer+ball&qid=1677566588&sprefix=soccer+ball%2Caps%2C76&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyM1FNTUlQUlZLMzhLJmVuY3J5cHRlZElkPUEwMDAxNTcwM09DT083TEVYU1Q3OSZlbmNyeXB0ZWRBZElkPUEwNTU3MTgyMTczVFA5N0tSVjdRUiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU=" 
+    product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Performance/dp/B09FH4K5J1/ref=sr_1_1_sspa?crid=O0KB7A6DOVP8&keywords=soccer+ball&qid=1677566588&sprefix=soccer+ball%2Caps%2C76&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyM1FNTUlQUlZLMzhLJmVuY3J5cHRlZElkPUEwMDAxNTcwM09DT083TEVYU1Q3OSZlbmNyeXB0ZWRBZElkPUEwNTU3MTgyMTczVFA5N0tSVjdRUiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU="
     main(product_url)

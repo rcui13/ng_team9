@@ -7,11 +7,18 @@
 
 {% block script %}
     <script>
-        let url = sessionStorage.getItem("url")
+        let url = sessionStorage.getItem("url");
         document.getElementById("url").value = url;
-        // window.location.replace('/load_reviews');
-        const req = new XMLHttpRequest();
-        req.open('POST', `/load_reviews/${JSON.stringify(url)}`);
-        req.send();
+        console.log(url, typeof url)
+        let req = new XMLHttpRequest();
+        console.log(req)
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log("state change");
+            }
+        };
+        req.open('POST', `/load_reviews`, true);
+        req.setRequestHeader("content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+        req.send("url=" + url);
     </script>
 {% endblock %}

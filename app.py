@@ -14,16 +14,15 @@ def mainpage():
 def get_reviews():
     return render_template('loading.html')
 
-@app.route('/load_reviews/<string:url>', methods=['POST'])
+@app.route('/load_reviews', methods=['POST'])
 def load_reviews():
-    link = json.loads(url)
+    # if request.method == 'POST':
+    url = request.form["url"]
+    print(type(url))
+    print(url)
+    # link = json.loads(url)
+    # print(link)
+    review = main.main(url)
+    print(review)
 
-    review = main.main(link)
-    # time.sleep(3)
-    # f = open('testreview.json')
-    # review = json.load(f)
-    # print(review)
-    # print(review['0']['reviewer_name'])
-    # print(len(review))
-    # plot.make_pie_chart(review)
     return render_template('reviews_flask.html', dict=review)
