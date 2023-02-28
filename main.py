@@ -1,7 +1,7 @@
 from review import Review
 from review_scraper import ReviewScraper
 import matplotlib.pyplot as plt
-# from review_classifier import reviewQuality
+from review_classifier import process10
 
 
 def main(url):
@@ -27,6 +27,8 @@ def main(url):
                        s.find("span", attrs={"data-hook": "review-date"}).text,
                        True))
 
+    process10(scraper.get_product_name(url), reviews)
+    create_graph(reviews)
 
 def output_json(product_name, reviews) -> dict:
     review_output = {}
