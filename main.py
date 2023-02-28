@@ -4,14 +4,12 @@ import matplotlib.pyplot as plt
 from review_classifier import process10
 
 def main(url):
-    scraper = ReviewScraper()
+    scraper = ReviewScraper(url)
     reviews = []
     
-    reviews_url = scraper.get_product_reviews_url(url)
+    product_name = scraper.get_product_name()
 
-    product_name = scraper.get_product_name(reviews_url)
-
-    for page in scraper.pages(reviews_url):
+    for page in scraper.pages():
         review_html = page.find_all(class_="a-section celwidget")
 
         for s in review_html:
