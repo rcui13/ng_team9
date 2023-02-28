@@ -27,14 +27,10 @@ def main(url):
     real_reviews = [obj for obj in reviews if isinstance(obj, Review) and obj.is_real]
     fake_reviews = [obj for obj in reviews if isinstance(obj, Review) and not obj.is_real]
 
-    print(len(fake_reviews))
-    print(len(real_reviews))
-    
     create_graph(reviews)
 
 def _add(scraper, url, reviews):
     page = scraper.get_soup(url)
-    print("got soup" + url[len(url) - 1])
     review_html = page.find_all(class_="a-section celwidget")
     for s in review_html:
         reviews.append(

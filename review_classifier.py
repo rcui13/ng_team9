@@ -30,7 +30,6 @@ def _reviewQuality(product_name, reviews: list[Review]):
         presence_penalty=0.0
     )
 
-    print("AI processed")
     # Takes the returned response from openai and extracts information with regex to
     # tell if review is real or fake
     text = response["choices"][0]["text"]

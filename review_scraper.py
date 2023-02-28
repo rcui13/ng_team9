@@ -31,7 +31,6 @@ class ReviewScraper:
     def pages(self):
         i = 1
         while i <= self.page_count:
-            print("Scraping page " + str(i))
             yield self.reviews_url + str(i)
             i += 1
     
