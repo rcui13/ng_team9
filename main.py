@@ -26,7 +26,7 @@ def main(url):
                        s.find("span", attrs={"data-hook": "review-date"}).text,
                        True))
 
-    process10(scraper.get_product_name(url), reviews)
+    process10(product_name, reviews)
     create_graph(reviews)
 
 def output_json(product_name, reviews) -> dict:
@@ -44,7 +44,7 @@ def output_json(product_name, reviews) -> dict:
 def create_graph(reviews):
     unreliable = 0
     for review in reviews:
-        if review.is_real:
+        if not review.is_real:
             unreliable += 1
     
     _, ax = plt.subplots()
