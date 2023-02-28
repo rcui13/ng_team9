@@ -17,19 +17,21 @@ def main(url):
             reviews.append(
                 Review(s.find(class_="a-profile-name"),
                        s.find(["a", "span"], attrs={"data-hook": "review-title"}).find("span"),
-                       s.find("span", attrs={"data-hook": "review-body"}),
+                       s.find("span", attrs={"data-hook": "review-body"}), 
                        s.find("i", attrs={
                               "data-hook": re.compile(r'(cmps)?review-star-rating')}).find("span"),
                        s.find("a")['href'],
                        s.find("span", attrs={"data-hook": "review-date"}).text,
                        True))
     
+    for r in reviews:
+        r.text = r.text.replace("The media could not be loaded.", "").strip()
+
     process10(product_name, reviews)
     create_graph(reviews)
 
-    for r in reviews:
-        if not r.is_real:
-            print(r.text)
+ #   for r in reviews:
+ #       print(r.text)
 
 def output_json(product_name, reviews) -> dict:
     review_output = {}
