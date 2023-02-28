@@ -26,7 +26,7 @@ def main(url):
                        s.find("span", attrs={"data-hook": "review-date"}).text,
                        True))
 
-    process10(product_name, reviews)
+ #   process10(product_name, reviews)
     create_graph(reviews)
 
 def output_json(product_name, reviews) -> dict:

@@ -17,6 +17,7 @@ class ReviewScraper:
     def pages(self, url: str) -> BeautifulSoup:
         i = 1
         soup = BeautifulSoup(self.get_website_html(url + str(i)), features="html.parser")
+        print(soup)
         while soup.find(class_="a-section review aok-relative"):
             yield soup
             i += 1
@@ -29,4 +30,5 @@ class ReviewScraper:
 
     def get_product_name(self, url):
         soup = BeautifulSoup(self.get_website_html(url) + "1", features="html.parser")
+        print(soup)
         return re.search(r'^What do you want to know about (.*)\?$', soup.find("textarea", attrs={"name":"askQuestionText"})['placeholder']).group(1)
