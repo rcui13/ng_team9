@@ -32,19 +32,14 @@
                 alert("Please enter a valid URL");
             } else {
                 sessionStorage.setItem("url", url);
-                // window.location.replace('/get_reviews');
-                let req = new XMLHttpRequest();
-                req.onreadystatechange = function()
-                {
-                    if(this.readyState == 4 && this.status == 200) {
-                        console.log("change gstate")
-                    } else {
+                $.ajax({
+                    url: '/get_reviews',
+                    method: 'post',
+                    success: function() {
+                        console.log("success desc.");
+                        window.location.replace("/get_reviews");
                     }
-                }
-
-                req.open('GET', '/get_reviews', true);
-                req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-                req.send();
+                })
             }
 
             event.preventDefault();

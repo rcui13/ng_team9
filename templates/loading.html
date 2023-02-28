@@ -10,15 +10,15 @@
         let url = sessionStorage.getItem("url");
         document.getElementById("url").value = url;
         console.log(url, typeof url)
-        let req = new XMLHttpRequest();
-        console.log(req)
-        req.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log("state change");
+        $.ajax({
+            url: '/load_reviews',
+            method: 'post',
+            // data: url,
+            // dataType: "text",
+            success: function() {
+                console.log("success loading.");
+                window.location.replace("/load_reviews");
             }
-        };
-        req.open('POST', `/load_reviews`, true);
-        req.setRequestHeader("content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-        req.send("url=" + url);
+        })
     </script>
 {% endblock %}
