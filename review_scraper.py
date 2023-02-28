@@ -7,12 +7,16 @@ class ReviewScraper:
 
     def __init__(self, url):
         self.reviews_url = self.get_product_reviews_url(url)
-        self.big_soup = BeautifulSoup(self.get_website_html(self.reviews_url), features="html.parser")
-        while re.search(r'An error occurred while processing your request.', self.big_soup.text) != None:
+        self.big_soup = self.get_soup(self.reviews_url) 
+        
+    def get_soup(self, url):
+        soup = BeautifulSoup(self.get_website_html(url), features="html.parser")
+        while re.search(r'An error occurred while processing your request.', soup.text) != None:
             print("Retrying...")
-            self.big_soup = BeautifulSoup(self.get_website_html(self.reviews_url), features="html.parser")
-            time.sleep(10)
-            
+            soup = BeautifulSoup(self.get_website_html(url), features="html.parser")
+            time.sleep(3)            
+        return soup
+    
     def get_website_html(self, url: str) -> str:
         return requests.get(url, 
                             headers=({'User-Agent':'Mozilla/5.0 (X11; Linux x86_64)\
@@ -25,11 +29,13 @@ class ReviewScraper:
 
     def pages(self) -> BeautifulSoup:
         i = 1
-        soup = BeautifulSoup(self.get_website_html(self.reviews_url + str(i)), features="html.parser")
+        print("Scraping page " + str(i))
+        soup = self.get_soup(self.reviews_url + str(i))
         while soup.find(class_="a-section review aok-relative"):
             yield soup
             i += 1
-            soup = BeautifulSoup(self.get_website_html(self.reviews_url + str(i)), features="html.parser")
+            print("Scraping page " + str(i))
+            soup = self.get_soup(self.reviews_url + str(i))
     
     # Extracts the product code in order to navigate into review page
     def extract_product_code(self, url: str) -> str:

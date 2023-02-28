@@ -13,6 +13,7 @@ def main(url):
         review_html = page.find_all(class_="a-section celwidget")
 
         for s in review_html:
+            
             reviews.append(
                 Review(s.find(class_="a-profile-name"),
                        s.find("a", attrs={
@@ -51,6 +52,5 @@ def create_graph(reviews):
     plt.show()
 
 if "__main__" == __name__:
-    product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Pe\
-        rformance/dp/B09FH4K5J1/ref=cm_cr_arp_d_product_top?ie=UTF8"
+    product_url = "https://www.amazon.com/GLAMFIELDS-Clipper-Catcher-Fingernail-Stainless/dp/B07YKTRSFM" 
     main(product_url)
