@@ -55,5 +55,5 @@ def create_graph(reviews):
     plt.show()
 
 if "__main__" == __name__:
-    product_url = "https://www.amazon.com/WAHU-Phlat-Ball-Classic-Green/dp/B09NWCVCGB" 
+    product_url = "https://www.amazon.com/GLAMFIELDS-Clipper-Fingernail-Stainless-MF-Large/dp/B09332G51G" 
     main(product_url)
