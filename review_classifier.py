@@ -18,10 +18,6 @@ def _reviewQuality(product_name, reviews: list[Review]):
     for review in reviews:
         review_text = review.text
 
-        # For debugging purposes to see the max input possible
-        if review_number == 14:
-            break
-
         prompt += str(review_number) + ". " + "\"" + review_text + "\"" + "\n"
         review_number += 1
 
@@ -48,9 +44,9 @@ def _reviewQuality(product_name, reviews: list[Review]):
         else:
             reviews[i].is_real = False
 
-def process10(product_name, reviews: list[Review]):
-    for i in range(0, len(reviews), 10):
+def processQuality(product_name, reviews: list[Review], batch_size: int):
+    for i in range(0, len(reviews), batch_size):
         print("AI Processing")
-        sublist = reviews[i:i+10]
+        sublist = reviews[i:i+batch_size]
         _reviewQuality(product_name, sublist)
     
