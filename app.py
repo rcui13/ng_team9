@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 import time
 import json
 import plot
+import main
 
 app = Flask(__name__)
 
@@ -13,13 +14,16 @@ def mainpage():
 def get_reviews():
     return render_template('loading.html')
 
-@app.route('/load_reviews')
+@app.route('/load_reviews/<string:url>', methods=['POST'])
 def load_reviews():
-    time.sleep(3)
-    f = open('testreview.json')
-    review = json.load(f)
-    print(review)
-    print(review['0']['reviewer_name'])
-    print(len(review))
+    link = json.loads(url)
+
+    review = main.main(link)
+    # time.sleep(3)
+    # f = open('testreview.json')
+    # review = json.load(f)
+    # print(review)
+    # print(review['0']['reviewer_name'])
+    # print(len(review))
     # plot.make_pie_chart(review)
     return render_template('reviews_flask.html', dict=review)

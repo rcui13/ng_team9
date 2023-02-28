@@ -7,7 +7,11 @@
 
 {% block script %}
     <script>
-        document.getElementById("url").value = sessionStorage.getItem("url");
-        window.location.replace('/load_reviews');
+        let url = sessionStorage.getItem("url")
+        document.getElementById("url").value = url;
+        // window.location.replace('/load_reviews');
+        const req = new XMLHttpRequest();
+        req.open('POST', `/load_reviews/${JSON.stringify(url)}`);
+        req.send();
     </script>
 {% endblock %}
