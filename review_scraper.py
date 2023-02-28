@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+import time
 
 class ReviewScraper:
 
@@ -34,5 +35,7 @@ class ReviewScraper:
         self.reviews_url = self.get_product_reviews_url(url)
         self.big_soup = BeautifulSoup(self.get_website_html(self.reviews_url), features="lxml")
         while re.search(r'An error occurred while processing your request.', self.big_soup.text) != None:
+            print("Retrying...")
             self.big_soup = BeautifulSoup(self.get_website_html(self.reviews_url), features="lxml")
-            print("exe")            
+            time.sleep(3)
+            
