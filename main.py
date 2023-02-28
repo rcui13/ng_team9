@@ -1,4 +1,5 @@
 from review import Review
+import threading
 from review_scraper import ReviewScraper
 import matplotlib.pyplot as plt
 from review_classifier import processQuality
@@ -6,24 +7,19 @@ import re
 
 def main(url):
     scraper = ReviewScraper(url)
-    reviews = []
-    
+    reviews = []   
+    threads = []
+
     product_name = scraper.get_product_name()
-
-    for page in scraper.pages():
-        review_html = page.find_all(class_="a-section celwidget")
-
-        for s in review_html:
-            reviews.append(
-                Review(s.find(class_="a-profile-name"),
-                       s.find(["a", "span"], attrs={"data-hook": "review-title"}).find("span"),
-                       s.find("span", attrs={"data-hook": "review-body"}), 
-                       s.find("i", attrs={
-                              "data-hook": re.compile(r'(cmps)?review-star-rating')}).find("span"),
-                       s.find("a")['href'],
-                       s.find("span", attrs={"data-hook": "review-date"}).text,
-                       True))
     
+    for url in scraper.pages():
+        thread = threading.Thread(target=_add, args=(scraper, url, reviews))
+        thread.start()
+        threads.append(thread)
+
+    for thread in threads:
+        thread.join()
+ 
     for r in reviews:
         r.text = r.text.replace("The media could not be loaded.", "").strip()
     processQuality(product_name, reviews, 10)
@@ -36,8 +32,20 @@ def main(url):
     
     create_graph(reviews)
 
- #   for r in reviews:
- #       print(r.text)
+def _add(scraper, url, reviews):
+    page = scraper.get_soup(url)
+    print("got soup" + url[len(url) - 1])
+    review_html = page.find_all(class_="a-section celwidget")
+    for s in review_html:
+        reviews.append(
+            Review(s.find(class_="a-profile-name"),
+                   s.find(["a", "span"], attrs={"data-hook": "review-title"}).find("span"),
+                   s.find("span", attrs={"data-hook": "review-body"}), 
+                   s.find("i", attrs={
+                          "data-hook": re.compile(r'(cmps)?review-star-rating')}).find("span"),
+                   s.find("a")['href'],
+                   s.find("span", attrs={"data-hook": "review-date"}).text,
+                   True))
 
 def output_json(product_name, reviews) -> dict:
     review_output = {}

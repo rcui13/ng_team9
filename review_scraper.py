@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import time
+import math
 
 class ReviewScraper:
 
@@ -27,15 +28,12 @@ class ReviewScraper:
     def get_product_reviews_url(self, url: str) -> str:
         return f"https://www.amazon.com/product-reviews/{self.extract_product_code(url)}/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber="
 
-    def pages(self) -> BeautifulSoup:
+    def pages(self):
         i = 1
-        print("Scraping page " + str(i))
-        soup = self.get_soup(self.reviews_url + str(i))
-        while soup.find(class_="a-section review aok-relative"):
-            yield soup
-            i += 1
+        while i <= self.page_count:
             print("Scraping page " + str(i))
-            soup = self.get_soup(self.reviews_url + str(i))
+            yield self.reviews_url + str(i)
+            i += 1
     
     # Extracts the product code in order to navigate into review page
     def extract_product_code(self, url: str) -> str:
@@ -43,4 +41,7 @@ class ReviewScraper:
         return splitted_url[5] if splitted_url[4] == "dp" else print("URL format changed") 
 
     def get_product_name(self):
+        review_num_text = self.big_soup.find("div", attrs={"data-hook":"cr-filter-info-review-rating-count"}).text
+        num = eval(re.search(r'([0-9]+) with reviews', review_num_text).group(1))
+        self.page_count = int(math.ceil(num/10.0))
         return re.search(r'^What do you want to know about (.*)\?$', self.big_soup.find("textarea", attrs={"name":"askQuestionText"})['placeholder']).group(1)
