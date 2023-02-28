@@ -49,6 +49,7 @@ def create_graph(reviews):
     _, ax = plt.subplots()
     ax.pie([unreliable, len(reviews)-unreliable], 
            labels=["Unreliable", "Reliable"])
+    plt.show()
 
 
 if "__main__" == __name__:
