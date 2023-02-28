@@ -1,5 +1,6 @@
 from review import Review
 from review_scraper import ReviewScraper
+import matplotlib.pyplot as plt
 # from review_classifier import reviewQuality
 
 
@@ -26,9 +27,6 @@ def main(url):
                        s.find("span", attrs={"data-hook": "review-date"}).text,
                        True))
 
-    print(product_name)
-
-    print(reviews[0].date)
 
 def output_json(product_name, reviews) -> dict:
     review_output = {}
@@ -41,6 +39,16 @@ def output_json(product_name, reviews) -> dict:
                             "date": review.date,
                             "is_real": review.is_real}
     return {product_name: review_output}
+
+def create_graph(reviews):
+    unreliable = 0
+    for review in reviews:
+        if review.is_real:
+            unreliable += 1
+    
+    _, ax = plt.subplots()
+    ax.pie([unreliable, len(reviews)-unreliable], 
+           labels=["Unreliable", "Reliable"])
 
 
 if "__main__" == __name__:
