@@ -23,11 +23,12 @@ def main(url):
                        s.find("i", attrs={
                               "data-hook": "review-star-rating"}).find("span"),
                        s.find("a")['href'],
+                       s.find("span", attrs={"data-hook": "review-date"}).text,
                        True))
 
     print(product_name)
 
-    #output_json(product_name, reviews)
+    print(reviews[0].date)
 
 def output_json(product_name, reviews) -> dict:
     review_output = {}
@@ -37,6 +38,7 @@ def output_json(product_name, reviews) -> dict:
                             "rating": review.rating,
                             "text": review.text,
                             "reviewer_url": review.reviewer_url,
+                            "date": review.date,
                             "is_real": review.is_real}
     return {product_name: review_output}
 
