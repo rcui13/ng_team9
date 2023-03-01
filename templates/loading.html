@@ -1,10 +1,25 @@
-{% extends 'mainpage.html' %}
+{% extends 'description.html' %}
 
-{% block content %}
-    <p>Fetching reviews...</p>
+{% block load %}
+    <p style="margin:25px; font-size:30px">Fetching reviews...</p>
     <div class="loader"></div>
-    <script>
-        document.getElementById("url").value = sessionStorage.getItem("url");
+{% endblock %}
 
+{% block script %}
+    <script>
+        let url = sessionStorage.getItem("url");
+        document.getElementById("url").value = url;
+        console.log(url, typeof url)
+        $.ajax({
+            url: '/load_reviews',
+            method: 'post',
+            data: "data=" + url,
+            success: function() {
+                console.log("success loading.");
+                window.location.replace("/load_reviews");
+            }, error: function() {
+                window.location.replace('/')
+            }
+        })
     </script>
 {% endblock %}

@@ -1,9 +1,11 @@
-import re
 import openai
+import re
 from review import Review
 import threading
 
+# Takes an array of review_texts and returns an array of either Real or Fake
 def _reviewQuality(product_name, reviews: list[Review]):
+
     # This is the key from openai
     openai.api_key = "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"
     
@@ -49,7 +51,7 @@ def processQuality(product_name, reviews: list[Review], batch_size: int):
         thread = threading.Thread(target=_reviewQuality, args=(product_name, sublist))
         thread.start()
         threads.append(thread)
-    
+
     # Wait for all threads to complete
     for thread in threads:
         thread.join()

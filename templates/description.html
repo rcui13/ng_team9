@@ -1,12 +1,48 @@
 {% extends 'mainpage.html' %}
 
 {% block content %}
-    <h3>Amazon Review Evaluator displays and determines if a review is real or fake</h3>
+    <h3>Amazon Review Evaluator displays and determines if a review is reliable or unreliable</h3>
     <br>
     <h3>How does Amazon Review Evaluator work?</h3>
-    <div>
-        <img src="../img/python_logo.png" alt="Python logo">
-        <img src="../img/openai_logo.png" alt="OpenAI logo">
-        <img src="../img/flask_logo.png" alt="Flask logo">
+    <br>
+    <div class="description-flex">
+        <div class="description-content">
+            <img src="{{url_for('static', filename='python_logo.png')}}" alt="Python logo">
+            <span>Python's Beautiful Soup library scrapes Amazon product pages for reviews</span>
+        </div>
+        <div class="description-content">
+            <img src="{{url_for('static', filename='openai_logo.png')}}" alt="OpenAI logo">
+            <span>A request is sent to OpenAI's Davinci model to interpret reviews</span>
+        </div>
+        <div class="description-content">
+            <img src="{{url_for('static', filename='flask_logo.png')}}" alt="Flask logo">
+            <span>Flask incorporates the Python results and HTML for easy review analysis</span>
+        </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        console.log("descriptoin.html")
+        function submitForm() {
+            const url = ($("#search").serializeArray())[0].value;
+            console.log(url);
+
+            if (url === '') {
+                alert("Please enter a valid URL");
+            } else {
+                sessionStorage.setItem("url", url);
+                $.ajax({
+                    url: '/get_reviews',
+                    method: 'post',
+                    success: function() {
+                        console.log("success desc.");
+                        window.location.replace("/get_reviews");
+                    }
+                })
+            }
+
+            event.preventDefault();
+        }
+    </script>
 {% endblock %}

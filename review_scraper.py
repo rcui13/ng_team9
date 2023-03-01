@@ -20,10 +20,10 @@ class ReviewScraper:
     
     def get_website_html(self, url: str) -> str:
         return requests.get(url, 
-                            headers=({'User-Agent':'Mozilla/5.0 (X11; Linux x86_64)\
-                                      AppleWebKit/537.36 (KHTML, like Gecko)Chrome/\
-                                      44.0.2403.157 Safari/537.36','Accept-Language\
-                                      ': 'en-US, en;q=0.5'})).text
+                            # headers=({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
+                            #                        (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36\
+                            #                        '})).text
+                            headers = ({"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"})).text
 
     def get_product_reviews_url(self, url: str) -> str:
         return f"https://www.amazon.com/product-reviews/{self.extract_product_code(url)}/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber="
@@ -37,10 +37,12 @@ class ReviewScraper:
     # Extracts the product code in order to navigate into review page
     def extract_product_code(self, url: str) -> str:
         splitted_url = url.split("/")
-        return splitted_url[5] if splitted_url[4] == "dp" else print("URL format changed") 
+        if splitted_url[4] == "dp":
+            return splitted_url[5]
+        raise AttributeError()
+
 
     def get_product_name(self):
         review_num_text = self.big_soup.find("div", attrs={"data-hook":"cr-filter-info-review-rating-count"}).text
         num = eval(re.search(r'([0-9]+) with reviews', review_num_text).group(1))
         self.page_count = int(math.ceil(num/10.0))
-        return re.search(r'^What do you want to know about (.*)\?$', self.big_soup.find("textarea", attrs={"name":"askQuestionText"})['placeholder']).group(1)

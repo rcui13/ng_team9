@@ -4,7 +4,7 @@ from review_scraper import ReviewScraper
 import matplotlib.pyplot as plt
 from review_classifier import processQuality
 import re
-import time
+import json
 
 def main(url):
     scraper = ReviewScraper(url)
@@ -25,12 +25,23 @@ def main(url):
  
     for r in reviews:
         r.text = r.text.replace("The media could not be loaded.", "").strip()
+        r.text = r.text.replace('"', "&quot;")
+        r.review_title = r.review_title.replace('"', "&quot;")
+
     processQuality(product_name, reviews, 10)
 
     real_reviews = [obj for obj in reviews if isinstance(obj, Review) and obj.is_real]
     fake_reviews = [obj for obj in reviews if isinstance(obj, Review) and not obj.is_real]
 
+<<<<<<< HEAD
     create_graph(reviews)
+=======
+    print(len(fake_reviews))
+    print(len(real_reviews))
+
+    # create_graph(reviews)
+    return output_json(product_name, reviews)
+>>>>>>> c945096a88934f5e8ed4488c6fa2abb06d5a6bb8
 
 def _add(scraper, url, reviews):
     page = scraper.get_soup(url)
@@ -56,8 +67,8 @@ def output_json(product_name, reviews) -> dict:
                             "reviewer_url": review.reviewer_url,
                             "date": review.date,
                             "is_real": review.is_real}
-    return {product_name: review_output}
-
+    return json.dumps([product_name, review_output])
+    # return [product_name, review_output]
 def create_graph(reviews):
     unreliable = 0
     for review in reviews:
@@ -70,5 +81,5 @@ def create_graph(reviews):
     plt.show()
 
 if "__main__" == __name__:
-    product_url = "https://www.amazon.com/GLAMFIELDS-Clipper-Catcher-Fingernail-Stainless/dp/B07YKTRSFM/ref=cm_cr_arp_d_product_top?ie=UTF8" 
+    product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Performance/dp/B09FH4K5J1/ref=sr_1_1_sspa?crid=O0KB7A6DOVP8&keywords=soccer+ball&qid=1677566588&sprefix=soccer+ball%2Caps%2C76&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyM1FNTUlQUlZLMzhLJmVuY3J5cHRlZElkPUEwMDAxNTcwM09DT083TEVYU1Q3OSZlbmNyeXB0ZWRBZElkPUEwNTU3MTgyMTczVFA5N0tSVjdRUiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU="
     main(product_url)
