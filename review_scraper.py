@@ -19,10 +19,10 @@ class ReviewScraper:
     
     def get_website_html(self, url: str) -> str:
         return requests.get(url, 
-                            headers=({'User-Agent':'Mozilla/5.0 (X11; Linux x86_64)\
-                                      AppleWebKit/537.36 (KHTML, like Gecko)Chrome/\
-                                      44.0.2403.157 Safari/537.36','Accept-Language\
-                                      ': 'en-US, en;q=0.5'})).text
+                            # headers=({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
+                            #                        (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36\
+                            #                        '})).text
+                            headers = ({"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"})).text
 
     def get_product_reviews_url(self, url: str) -> str:
         return f"https://www.amazon.com/product-reviews/{self.extract_product_code(url)}/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber="
@@ -46,4 +46,5 @@ class ReviewScraper:
 
 
     def get_product_name(self):
+        # print(self.big_soup)
         return re.search(r'^What do you want to know about (.*)\?$', self.big_soup.find("textarea", attrs={"name":"askQuestionText"})['placeholder']).group(1)
