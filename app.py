@@ -1,11 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-import requests
-import time
-import json
-import plot
 import main
-import html
-from html.parser import HTMLParser
 
 app = Flask(__name__)
 app.secret_key = "asdfjkl;"
@@ -30,6 +24,7 @@ def load_reviews():
     try:
         review = main.main(url)
         print(review)
+        print(review[233])
         return render_template('reviews_flask.html', dict=review)
     except AttributeError:
         print("asdf")

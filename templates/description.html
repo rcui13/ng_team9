@@ -1,7 +1,7 @@
 {% extends 'mainpage.html' %}
 
 {% block content %}
-    <h3>Amazon Review Evaluator displays and determines if a review is reliable or unreliable</h3>
+    <h3 style="padding-top:25px">Amazon Review Evaluator displays and determines if a review is reliable or unreliable</h3>
     <br>
     <h3>How does Amazon Review Evaluator work?</h3>
     <br>
@@ -23,7 +23,6 @@
 
 {% block script %}
     <script>
-        console.log("descriptoin.html")
         function submitForm() {
             const url = ($("#search").serializeArray())[0].value;
             console.log(url);

@@ -1,15 +1,21 @@
 .header {
-    background-color: #1b1c2a;
+    background-image: linear-gradient(black, #1b1c2a);
+    height:50px;
 }
 
 .body {
-    background-color: #73a3a5;
-    height:300px;
+    /*background-color: #2b2b2c;*/
+    background-image: linear-gradient(#1b1c2a, #2b2b2c);
+    height:260px;
+    padding-top:30px;
 }
 
 #header{
     cursor: pointer;
     text-decoration: none;
+    display: inline-block;
+    /*top:-30px;*/
+    position: relative;
 }
 
 .header-content {
@@ -19,14 +25,27 @@
 }
 
 .content-center {
-    /*padding-top: 40px;*/
-    padding:30px;
+    padding:10px 30px 30px 30px;
     /*display: flex;*/
+}
+
+#url {
+    border-radius: 5px;
+    border-color: black;
+    border-width: 1px;
+
 }
 
 #search-button {
     border-width:1px;
     cursor:pointer;
+    background-color: #FF9900;
+    border-radius: 5px;
+    height:29px;
+}
+
+.fa-search {
+    color: #1b1c2a;
 }
 
 .scraper {
@@ -36,6 +55,7 @@
 
 body {
     overflow-x: hidden;
+    height: 275px;
 }
 
 .loader {
@@ -183,4 +203,41 @@ a {
     width: 75%;
     padding-top: 20px;
     display: inherit;
+}
+
+.disclaimer {
+    display: inline-block;
+    margin: 2% 31% 2% 27%;
+    text-align: left;
+    padding-top:25px;
+    color: white;
+}
+
+.filter-buttons {
+    border-radius:5px;
+    border-width:1.5px;
+    margin: 0px 5px 0px 5px;
+    background-color: #FF9900;
+    font-weight: bold;
+}
+
+ul {
+    margin: 20px;
+    list-style: none;
+}
+
+.input-color {
+    position:relative;
+}
+.input-color input {
+    padding-left: 20px;
+}
+.input-color .color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+    position: absolute;
+    left: 5px;
+    top: 8px;
 }

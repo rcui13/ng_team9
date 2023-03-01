@@ -5,7 +5,6 @@ from review_classifier import processQuality
 import re
 import json
 import threading
-import matplotlib.pyplot as plt
 
 def main(url):
     scraper = ReviewScraper(url)
@@ -26,10 +25,9 @@ def main(url):
         r.text = r.text.replace("The media could not be loaded.", "").strip()
         r.text = r.text.replace('"', "&quot;")
         r.review_title = r.review_title.replace('"', "&quot;")
+        r.review_title = r.review_title.replace("The media could not be loaded.", "").strip()
 
     processQuality(product_name, reviews, 10)
-
-    create_graph(reviews)
 
     return output_json(product_name, reviews)
 
@@ -44,7 +42,7 @@ def _add(scraper, url, reviews):
         link = s.find("a")['href']
         date = s.find("span", attrs={"data-hook": "review-date"}).text,
 
-        reviews.append(Review(name, body, title, rating, link, date, True))
+        reviews.append(Review(name, title, body, rating, link, date, True))
 
 def output_json(product_name, reviews) -> dict:
     review_output = {}
@@ -58,16 +56,6 @@ def output_json(product_name, reviews) -> dict:
                             "is_real": review.is_real}
     return json.dumps([product_name, review_output])
 
-def create_graph(reviews):
-    unreliable = 0
-    for review in reviews:
-        if not review.is_real:
-            unreliable += 1
-    
-    _, ax = plt.subplots()
-    ax.pie([unreliable, len(reviews)-unreliable], 
-           labels=["Unreliable", "Reliable"])
-    plt.show()
 
 if "__main__" == __name__:
     product_url = "https://www.amazon.com/Brisko-USA-Regulation-Professional-Performance/dp/B09FH4K5J1/ref=sr_1_1_sspa?crid=O0KB7A6DOVP8&keywords=soccer+ball&qid=1677566588&sprefix=soccer+ball%2Caps%2C76&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyM1FNTUlQUlZLMzhLJmVuY3J5cHRlZElkPUEwMDAxNTcwM09DT083TEVYU1Q3OSZlbmNyeXB0ZWRBZElkPUEwNTU3MTgyMTczVFA5N0tSVjdRUiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU="
