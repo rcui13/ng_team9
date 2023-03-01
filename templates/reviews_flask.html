@@ -40,7 +40,7 @@
     div.innerHTML= reviews_pre;
     // console.log(div.innerHTML)
     const reviews = JSON.parse(div.innerHTML);
-    // console.log(reviews)
+    console.log(reviews)
     // let fakeArr = [], realArr = [];
 
     let fakeNum = 0, realNum = 0;
@@ -48,7 +48,7 @@
     let conditionalHTML = ``;
     let stars = ``;
 
-    document.getElementById("product-name-url").innerHTML = reviews[0];
+    document.getElementById("product-name-url").innerHTML = reviews[0].replaceAll("&amp;quot;", '"');
     document.getElementById("product-name-url").href = sessionStorage.getItem('url')
 
     $(document).ready(function() {

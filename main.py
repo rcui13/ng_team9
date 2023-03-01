@@ -12,7 +12,8 @@ def main(url):
     threads = []
 
     product_name = scraper.get_product_name()
-
+    print(product_name)
+    product_name = product_name.replace('&#34;', '&quot;')
     for url in scraper.pages():
         thread = threading.Thread(target=_add, args=(scraper, url, reviews))
         thread.start()
@@ -24,7 +25,9 @@ def main(url):
     for r in reviews:
         r.text = r.text.replace("The media could not be loaded.", "").strip()
         r.text = r.text.replace('"', "&quot;")
+        r.text = r.text.replace('&#34;', "&quot;")
         r.review_title = r.review_title.replace('"', "&quot;")
+        r.review_title = r.review_title.replace('&#34;', "&quot;")
         r.review_title = r.review_title.replace("The media could not be loaded.", "").strip()
     try:
         processQuality(product_name, reviews, 10)
