@@ -27,6 +27,8 @@ def load_reviews():
     url = session['reviews']
     try:
         review = main.main(url)
+        if review == "An error occurred.":
+            return render_template('errorpage.html')
         print(review)
         print(review[233])
         return render_template('reviews_flask.html', dict=review)

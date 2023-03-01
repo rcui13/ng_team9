@@ -1,0 +1,21 @@
+{% extends 'description.html' %}
+
+{% block load %}
+<h3 style="margin:5px; color: #8d0000">Sorry, the request couldn't be processed at the moment. Click <a id="retry">here</a> to try again.</h3>
+{% endblock %}
+
+{% block script %}
+  <script>
+    document.getElementById("retry").addEventListener("click", function() {
+      $.ajax({
+        url: '/get_reviews',
+        method: 'post',
+        success: function() {
+          console.log("success desc.");
+          window.location.replace("/get_reviews");
+        }
+      })
+    })
+
+  </script>
+{% endblock %}
