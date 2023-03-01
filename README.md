@@ -1,6 +1,6 @@
 # Amazon Review Scraper
 
-Northrup Grumman Innovation Factory Hack Week submission by  
+Northrup Grumman Innovation Factory Hack Week submission by:  
   
 Richard Cui  
 William Huang  
