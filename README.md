@@ -1,4 +1,4 @@
-# amazon review scraper
+# Amazon Review Scraper
 
 Northrup Grumman Innovation Factory Hack Week submission by  
   
