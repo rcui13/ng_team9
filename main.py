@@ -12,7 +12,7 @@ def main(url):
     threads = []
 
     product_name = scraper.get_product_name()
-    
+
     for url in scraper.pages():
         thread = threading.Thread(target=_add, args=(scraper, url, reviews))
         threads.append(thread)
@@ -33,15 +33,12 @@ def main(url):
     real_reviews = [obj for obj in reviews if isinstance(obj, Review) and obj.is_real]
     fake_reviews = [obj for obj in reviews if isinstance(obj, Review) and not obj.is_real]
 
-<<<<<<< HEAD
     create_graph(reviews)
-=======
     print(len(fake_reviews))
     print(len(real_reviews))
 
     # create_graph(reviews)
     return output_json(product_name, reviews)
->>>>>>> c945096a88934f5e8ed4488c6fa2abb06d5a6bb8
 
 def _add(scraper, url, reviews):
     page = scraper.get_soup(url)
@@ -69,6 +66,7 @@ def output_json(product_name, reviews) -> dict:
                             "is_real": review.is_real}
     return json.dumps([product_name, review_output])
     # return [product_name, review_output]
+
 def create_graph(reviews):
     unreliable = 0
     for review in reviews:

@@ -46,3 +46,4 @@ class ReviewScraper:
         review_num_text = self.big_soup.find("div", attrs={"data-hook":"cr-filter-info-review-rating-count"}).text
         num = eval(re.search(r'([0-9]+) with reviews', review_num_text).group(1))
         self.page_count = int(math.ceil(num/10.0))
+        return re.search(r'^What do you want to know about (.*)\?$', self.big_soup.find("textarea", attrs={"name":"askQuestionText"})['placeholder']).group(1)
