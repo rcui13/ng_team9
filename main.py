@@ -1,24 +1,23 @@
 from review import Review
-import threading
 from review_scraper import ReviewScraper
-import matplotlib.pyplot as plt
 from review_classifier import processQuality
+
 import re
 import json
+import threading
+import matplotlib.pyplot as plt
 
 def main(url):
     scraper = ReviewScraper(url)
-    reviews = []   
+    reviews = []
     threads = []
 
     product_name = scraper.get_product_name()
 
     for url in scraper.pages():
         thread = threading.Thread(target=_add, args=(scraper, url, reviews))
-        threads.append(thread)
-        
-    for thread in threads:
         thread.start()
+        threads.append(thread)
 
     for thread in threads:
         thread.join()
@@ -30,29 +29,22 @@ def main(url):
 
     processQuality(product_name, reviews, 10)
 
-    real_reviews = [obj for obj in reviews if isinstance(obj, Review) and obj.is_real]
-    fake_reviews = [obj for obj in reviews if isinstance(obj, Review) and not obj.is_real]
-
     create_graph(reviews)
-    print(len(fake_reviews))
-    print(len(real_reviews))
 
-    # create_graph(reviews)
     return output_json(product_name, reviews)
 
 def _add(scraper, url, reviews):
     page = scraper.get_soup(url)
     review_html = page.find_all(class_="a-section celwidget")
     for s in review_html:
-        reviews.append(
-            Review(s.find(class_="a-profile-name"),
-                   s.find(["a", "span"], attrs={"data-hook": "review-title"}).find("span"),
-                   s.find("span", attrs={"data-hook": "review-body"}), 
-                   s.find("i", attrs={
-                          "data-hook": re.compile(r'(cmps)?review-star-rating')}).find("span"),
-                   s.find("a")['href'],
-                   s.find("span", attrs={"data-hook": "review-date"}).text,
-                   True))
+        name = s.find(class_="a-profile-name")
+        body = s.find("span", attrs={"data-hook": "review-body"})
+        title = s.find(["a", "span"], attrs={"data-hook": "review-title"}).find("span")
+        rating = s.find("i", attrs={"data-hook": re.compile(r'(cmps)?review-star-rating')}).find("span")
+        link = s.find("a")['href']
+        date = s.find("span", attrs={"data-hook": "review-date"}).text,
+
+        reviews.append(Review(name, body, title, rating, link, date, True))
 
 def output_json(product_name, reviews) -> dict:
     review_output = {}
@@ -65,7 +57,6 @@ def output_json(product_name, reviews) -> dict:
                             "date": review.date,
                             "is_real": review.is_real}
     return json.dumps([product_name, review_output])
-    # return [product_name, review_output]
 
 def create_graph(reviews):
     unreliable = 0
