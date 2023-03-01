@@ -12,7 +12,7 @@ class ReviewScraper:
         
     def get_soup(self, url):
         soup = BeautifulSoup(self.get_website_html(url), features="html.parser")
-        while re.search(r'An error occurred while processing your request.', soup.text) != None:
+        while re.search(r'An error occurred while processing your request.', soup.text) != None or re.search(r'Sorry, we just need to make sure', soup.text) != None:
             print("Retrying...")
             soup = BeautifulSoup(self.get_website_html(url), features="html.parser")
             time.sleep(3)            

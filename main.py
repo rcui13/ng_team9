@@ -4,6 +4,7 @@ from review_scraper import ReviewScraper
 import matplotlib.pyplot as plt
 from review_classifier import processQuality
 import re
+import time
 
 def main(url):
     scraper = ReviewScraper(url)
@@ -14,8 +15,10 @@ def main(url):
     
     for url in scraper.pages():
         thread = threading.Thread(target=_add, args=(scraper, url, reviews))
-        thread.start()
         threads.append(thread)
+        
+    for thread in threads:
+        thread.start()
 
     for thread in threads:
         thread.join()
