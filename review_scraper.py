@@ -40,7 +40,10 @@ class ReviewScraper:
     # Extracts the product code in order to navigate into review page
     def extract_product_code(self, url: str) -> str:
         splitted_url = url.split("/")
-        return splitted_url[5] if splitted_url[4] == "dp" else print("URL format changed") 
+        if splitted_url[4] == "dp":
+            return splitted_url[5]
+        raise AttributeError()
+
 
     def get_product_name(self):
         return re.search(r'^What do you want to know about (.*)\?$', self.big_soup.find("textarea", attrs={"name":"askQuestionText"})['placeholder']).group(1)

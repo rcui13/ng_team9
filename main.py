@@ -27,7 +27,9 @@ def main(url):
     
     for r in reviews:
         r.text = r.text.replace("The media could not be loaded.", "").strip()
-        r.text = r.text.replace('"', "'")
+        r.text = r.text.replace('"', "&quot;")
+        r.review_title = r.review_title.replace('"', "&quot;")
+
     processQuality(product_name, reviews, 10)
 
     real_reviews = [obj for obj in reviews if isinstance(obj, Review) and obj.is_real]

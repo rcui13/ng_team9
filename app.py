@@ -25,8 +25,12 @@ def load_reviews():
     if request.method == 'POST':
         url = request.form['data']
         session['reviews'] = url
-        return redirect('/load_reviews')
+        return "success"
     url = session['reviews']
-    review = main.main(url)
-
-    return render_template('reviews_flask.html', dict=review)
+    try:
+        review = main.main(url)
+        print(review)
+        return render_template('reviews_flask.html', dict=review)
+    except AttributeError:
+        print("asdf")
+        return render_template('invalidpage.html')

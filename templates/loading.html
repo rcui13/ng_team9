@@ -17,6 +17,8 @@
             success: function() {
                 console.log("success loading.");
                 window.location.replace("/load_reviews");
+            }, error: function() {
+                window.location.replace('/')
             }
         })
     </script>
