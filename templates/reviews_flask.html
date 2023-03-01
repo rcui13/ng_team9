@@ -1,0 +1,158 @@
+{% extends 'mainpage.html' %}
+
+{% block load %}
+    <h2><a id="product-name-url" target="_blank"></a></h2>
+    <div style="padding-top:10px;display:flex;padding-left:394px;">
+        <button class="filter-buttons" onclick="displayAll()">All Reviews</button>
+        <button class="filter-buttons" onclick="displayReal()">Reliable</button>
+        <button class="filter-buttons" onclick="displayFake()">Not Reliable</button>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div id="pie-chart">
+    </div>
+    <div style="display:flex;justify-content: flex-start;padding-top: 330px;position: absolute">
+        <ul>
+            <li>
+                <div class="input-color" id="notreliable">
+                    <div class="color-box" style="background-color: red;"></div>
+                </div>
+            </li>
+            <li>
+                <div class="input-color" id="reliable">
+                    <div class="color-box" style="background-color: green;"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="all-review">
+
+    </div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    const reviews_pre = ('{{dict}}')
+    const div = document.createElement("parse-to-json");
+    div.innerHTML= reviews_pre;
+    // console.log(div.innerHTML)
+    const reviews = JSON.parse(div.innerHTML);
+    // console.log(reviews)
+    // let fakeArr = [], realArr = [];
+
+    let fakeNum = 0, realNum = 0;
+    let html = ``;
+    let conditionalHTML = ``;
+    let stars = ``;
+
+    document.getElementById("product-name-url").innerHTML = reviews[0];
+    document.getElementById("product-name-url").href = sessionStorage.getItem('url')
+
+    $(document).ready(function() {
+        loadReviews();
+        setUpPieChart();
+    })
+
+    function setUpPieChart() {
+        const red = fakeNum / (fakeNum + realNum) * 100;
+        const green = realNum / (fakeNum + realNum) * 100;
+        $("#pie-chart").css("background", "conic-gradient(red 0% " + red + "%, green " + red + "% "+ green + "%)");
+
+
+        let notreliable = "<p style='padding-left: 25px'>Not Reliable: " + fakeNum + ", " + Math.round(red * 100) / 100 + "%</p>";
+        let reliable = "<p>Reliable: " + realNum + ", " + Math.round(green * 100) / 100 + "%</p>"
+        $("#notreliable").append(notreliable);
+        $("#reliable").append(reliable);
+    }
+
+    function loadReviews() {
+        for (let i = 0; i < Object.keys(reviews[1]).length; i++) {
+            if (reviews[1][i]["is_real"])
+                conditionalHTML = `<i class="fa fa-check-circle" aria-hidden="true"></i>`;
+            else
+                conditionalHTML = `<i class="fa fa-times-circle" aria-hidden="true"></i>`;
+
+            for (let j = 0; j < 5; j++) {
+                if (j < reviews[1][i]["rating"])
+                    stars += `<i class="fa fa-star" aria-hidden="true"></i>`;
+                else
+                    stars += `<i class="fa fa-star-o" aria-hidden="true"></i>`;
+            }
+
+            html += `
+            <div class="review">
+                <div class="review-left">
+                    <div class="reviewer">
+                        <a href=` + reviews[1][i]["reviewer_url"] + `>
+                        ` + reviews[1][i]["reviewer_name"] + `
+                        </a>
+                    </div>
+                <div class="review-rating">
+                    ` + stars + `
+                    <span style="padding-left: 10px">` + reviews[1][i]["review_title"].replaceAll("&amp;quot;", '"') + `</span>
+                </div>
+                <div class="review-date">` + reviews[1][i]["date"] + `</div>
+                    <div class="review-text">
+                        <p>` + reviews[1][i]["text"].replaceAll("&amp;quot;", '"') + `</p>
+                    </div>
+                </div>
+                <div class="review-right" style="">
+                    ` + conditionalHTML + `
+                </div>
+            </div>
+        `;
+
+            if (reviews[1][i]['is_real'] == true)
+                realNum++;
+            else
+                fakeNum++;
+            stars = ``;
+        }
+        $("#all-review").append(html);
+    }
+
+    function displayAll() {
+        const classReviews = document.getElementsByClassName("review");
+        for (let i = 0; i < classReviews.length; i++) {
+            classReviews[i].style.display = 'flex';
+        }
+    }
+
+    function displayFake() {
+        const classReviews = document.getElementsByClassName("review");
+        for (let i = 0; i < classReviews.length; i++) {
+            if (classReviews[i].childNodes[3].childNodes[1].classList.contains("fa-check-circle"))
+                classReviews[i].style.display = 'none';
+            if (classReviews[i].childNodes[3].childNodes[1].classList.contains("fa-times-circle"))
+                classReviews[i].style.display = 'flex';
+        }
+    }
+
+    function displayReal() {
+        const classReviews = document.getElementsByClassName("review");
+        for (let i = 0; i < classReviews.length; i++) {
+            if (classReviews[i].childNodes[3].childNodes[1].classList.contains("fa-times-circle"))
+                classReviews[i].style.display = 'none';
+            if (classReviews[i].childNodes[3].childNodes[1].classList.contains("fa-check-circle"))
+                classReviews[i].style.display = 'flex';
+        }
+    }
+
+
+    function submitForm() {
+        const url = ($("#search").serializeArray())[0].value;
+        console.log(url);
+
+        if (url === '') {
+            alert("Please enter a valid URL");
+        } else {
+            sessionStorage.setItem("url", url);
+            window.location.replace('/get_reviews');
+        }
+        event.preventDefault();
+    }
+</script>
+{% endblock %}
