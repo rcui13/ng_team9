@@ -6,6 +6,3 @@ Richard Cui
 William Huang  
 Jeffrey Song  
 Matthew Wang  
-
-
-
