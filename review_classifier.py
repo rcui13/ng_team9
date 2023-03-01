@@ -7,7 +7,8 @@ import threading
 def _reviewQuality(product_name, reviews: list[Review]):
 
     # This is the key from openai
-    openai.api_key = "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"
+    with open("key.txt", "r") as f:
+        openai.api_key = str(f.read())
     
     # This is the prompt that will generate if a review is real or fake
     prompt = "Classify whether these are Real or Fake reviews for an Amazon product called " + \
