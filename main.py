@@ -28,7 +28,7 @@ def main(url):
         r.review_title = r.review_title.replace("The media could not be loaded.", "").strip()
 
     processQuality(product_name, reviews, 10)
-
+    print("finished")
     return output_json(product_name, reviews)
 
 def _add(scraper, url, reviews):

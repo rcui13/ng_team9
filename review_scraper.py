@@ -32,9 +32,11 @@ class ReviewScraper:
         i = 1
         while i <= self.page_count:
             yield self.reviews_url + str(i)
+            print("Scraping page " + str(i))
             i += 1
-    
-    # Extracts the product code in order to navigate into review page
+
+
+# Extracts the product code in order to navigate into review page
     def extract_product_code(self, url: str) -> str:
         splitted_url = url.split("/")
         if splitted_url[4] == "dp":

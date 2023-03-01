@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, session
+from waitress import serve
 import main
 
 app = Flask(__name__)
 app.secret_key = "asdfjkl;"
+
+if __name__ == "__main__":
+    serve(app, host="localhost", port=8080)
 
 @app.route('/')
 def mainpage():
@@ -26,6 +30,6 @@ def load_reviews():
         print(review)
         print(review[233])
         return render_template('reviews_flask.html', dict=review)
-    except AttributeError:
+    except Exception:
         print("asdf")
         return render_template('invalidpage.html')
